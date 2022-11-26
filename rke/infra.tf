@@ -165,7 +165,7 @@ resource "azurerm_linux_virtual_machine" "management-server" {
 
 # Azure network interface for quickstart resources
 resource "azurerm_network_interface" "network_interface" {
-  count = var.node_pools
+  count = var.node_counts
 
   name                = "vm${count.index}-network-interface"
   location            = azurerm_resource_group.rancher.location
@@ -184,7 +184,7 @@ resource "azurerm_network_interface" "network_interface" {
 
 # Connect the security group to the network interface
 resource "azurerm_network_interface_security_group_association" "security_association" {
-  count = var.node_pools
+  count = var.node_counts
 
   network_interface_id      = azurerm_network_interface.network_interface[count.index].id
   network_security_group_id = azurerm_network_security_group.rancher-SecurityGroup.id
@@ -193,7 +193,7 @@ resource "azurerm_network_interface_security_group_association" "security_associ
 
 # Azure linux virtual machine for creating a single node RKE cluster and installing the Rancher Server
 resource "azurerm_linux_virtual_machine" "vm" {
-  count = var.node_pools
+  count = var.node_counts
 
 
   name                  = "${var.prefix}-vm${count.index}"
@@ -258,7 +258,7 @@ resource "azurerm_lb_backend_address_pool" "backend_pool" {
 }
 
 resource "azurerm_network_interface_backend_address_pool_association" "backend_pool_association" {
-  count = var.node_pools
+  count = var.node_counts
 
   network_interface_id    = azurerm_network_interface.network_interface[count.index].id
   ip_configuration_name   = "vm${count.index}_ip_config"

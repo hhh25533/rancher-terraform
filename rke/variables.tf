@@ -38,8 +38,8 @@ variable "instance_type" {
   default     = "Standard_DS2_v2"
 }
 
-# var.node_pools is a map of any
-variable "node_pools" {
+# var.node_counts is a map of any
+variable "node_counts" {
   type    = number
   default = 3
 }
